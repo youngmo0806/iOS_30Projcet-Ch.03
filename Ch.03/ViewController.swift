@@ -26,7 +26,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
 
     @IBAction func tapAcButton(_ sender: UIButton) {
@@ -46,13 +45,11 @@ class ViewController: UIViewController {
         if self.currentInput.count < 9 { // 패털에 9자리 까지만 입력 받는다.
             self.currentInput += number
             self.numberOutputLabel.text = self.currentInput
-        } else {
-            
         }
     }
     
     @IBAction func tapEqualButton(_ sender: UIButton) {
-        self.operand(self.currentOperation) //현재 저장되어 있는 상ㅌ
+        self.operand(self.currentOperation) //현재 저장되어 있는 상태
     }
     
     @IBAction func tapDotButton(_ sender: UIButton) {
@@ -83,24 +80,39 @@ class ViewController: UIViewController {
         //연산 기능
         
         if self.currentOperation != .unknown {  //연산 수행
-            
-            guard let first = Double(self.firstItem) else { return }
-            guard let second = Double(self.secondItem) else { return }
-            
-            switch operand {
-                case .Add:
-                    self.result = "\(first + second)"
-                case .Divide:
-                    self.result = "\(first / second)"
-                case .Multiply:
-                    self.result = "\(first * second)"
-                case .Subtract:
-                    self.result = "\(first - second)"
-                default:
-                    break
+            if !self.currentInput.isEmpty {
+                self.secondItem = self.currentInput
+                self.currentInput = ""
+                
+                guard let first = Double(self.firstItem) else { return }
+                guard let second = Double(self.secondItem) else { return }
+                
+                switch self.currentOperation {
+                    case .Add:
+                        self.result = "\(first + second)"
+                    case .Divide:
+                        self.result = "\(first / second)"
+                    case .Multiply:
+                        self.result = "\(first * second)"
+                    case .Subtract:
+                        self.result = "\(first - second)"
+                    default:
+                        break
+                }
+                
+                if let result = Double(self.result), result.truncatingRemainder(dividingBy: 1) == 0 {
+                    self.result = "\(Int(result))"
+                }
+                
+                self.firstItem = self.result
+                self.numberOutputLabel.text = self.result
             }
-        } else {
-        
+            self.currentOperation = operand
+            
+        } else { //.unknown 일때
+            self.firstItem = self.currentInput
+            self.currentInput = ""
+            self.currentOperation = operand
         }
         
         

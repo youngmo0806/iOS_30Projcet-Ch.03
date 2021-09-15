@@ -42,7 +42,7 @@ class ViewController: UIViewController {
     @IBAction func tapNumberButton(_ sender: UIButton) {
         guard let number = sender.title(for: .normal) else { return } //버튼의 타이틀을 읽어온다.
         
-        if self.currentInput.count < 9 { // 패털에 9자리 까지만 입력 받는다.
+        if self.currentInput.count < 9 { // 패널에 9자리 까지만 입력 받는다.
             self.currentInput += number
             self.numberOutputLabel.text = self.currentInput
         }

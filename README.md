@@ -1,2 +1,3 @@
 # Swift 30Project
-## Ch.03-계산기 앱
+## Part2. Basic
+### Ch.03-계산기 앱
